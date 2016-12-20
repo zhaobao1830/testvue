@@ -1,17 +1,45 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <h1 v-text="title"></h1>
+    <input v-model="newItem" @keyup.enter="addNew">
+    <ul>
+      <li v-for="item in items" :class="{showLove: item.isLove}" @click="changeLove(item)">
+          {{item.lable}}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
-
 export default {
-  name: 'app',
-  components: {
-    Hello
+  data: function () {
+    return {
+      title: 'jie',
+      items: [
+        {
+          lable: 'woshi',
+          isLove: true
+        },
+        {
+          lable: 'shiwo',
+          isLove: false
+        }
+      ],
+      newItem: ''
+    }
+  },
+  methods: {
+    changeLove: function (item) {
+      item.isLove = !item.isLove
+    },
+    addNew: function () {
+      this.items.push({
+        lable: this.newItem,
+        isLove: false
+      })
+      console.log(this.newItem)
+      this.newItem = ''
+    }
   }
 }
 </script>
@@ -24,5 +52,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.showLove{
+  text-decoration: underline;
 }
 </style>
