@@ -1,31 +1,36 @@
 <template>
   <div id="app">
-    <h1 v-text="title"></h1>
+    <!--<h1 v-text="title"></h1>-->
     <input v-model="newItem" @keyup.enter="addNew">
     <ul>
       <li v-for="item in items" :class="{showLove: item.isLove}" @click="changeLove(item)">
           {{item.lable}}
       </li>
     </ul>
+    <component-a msgfromfather="wo shi zb"></component-a>
   </div>
 </template>
 
 <script>
+import Store from './store.js'
+import ComponentA from './components/ComponentA'
 export default {
   data: function () {
     return {
       title: 'jie',
-      items: [
-        {
-          lable: 'woshi',
-          isLove: true
-        },
-        {
-          lable: 'shiwo',
-          isLove: false
-        }
-      ],
+      items: Store.fetch(),
       newItem: ''
+    }
+  },
+  components: {
+    ComponentA
+  },
+  watch: {
+    items: {
+      handler: function (items) {
+        Store.save(items)
+      },
+      deep: true
     }
   },
   methods: {
@@ -37,7 +42,6 @@ export default {
         lable: this.newItem,
         isLove: false
       })
-      console.log(this.newItem)
       this.newItem = ''
     }
   }
