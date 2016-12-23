@@ -7,7 +7,8 @@
           {{item.lable}}
       </li>
     </ul>
-    <component-a msgfromfather="wo shi zb"></component-a>
+    <p>childs tell me: {{ childwords }}</p>
+    <component-a msgfromfather="wo shi zb" v-on:chlid-tell-somethings="listento"></component-a>
   </div>
 </template>
 
@@ -19,7 +20,8 @@ export default {
     return {
       title: 'jie',
       items: Store.fetch(),
-      newItem: ''
+      newItem: '',
+      childwords: ''
     }
   },
   components: {
@@ -43,6 +45,9 @@ export default {
         isLove: false
       })
       this.newItem = ''
+    },
+    listento: function (msg) {
+      this.childwords=msg
     }
   }
 }
